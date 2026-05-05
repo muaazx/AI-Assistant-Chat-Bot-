@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div align="center">
 
 ## Knowledge-Assistant
@@ -267,3 +268,6 @@ sequenceDiagram
         Chat UI-->>User: Render token
     end
 ```
+=======
+# AI-Assistant-Chat-Bot-
+>>>>>>> 28e5f99d15ab27cd4cb3bc27b319a190e3d7cbfd
