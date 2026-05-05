@@ -1,273 +1,170 @@
-<<<<<<< HEAD
+# AI-Assistant-Chat-Bot
+
 <div align="center">
 
-## Knowledge-Assistant
+## AI Assistant Chat Bot
 
-#### A lightweight, free, file-based chat agent that answers questions from your custom knowledge files. No vector databases, no embeddings, no complex setup - just drop in your markdown files and start chatting.
+A simple and modern AI-powered chatbot built with Next.js and OpenRouter API.
+It provides real-time conversations with multiple AI models, streaming responses, markdown rendering, and a clean interactive chat interface.
 
-<kbd>env variables needed: OPENROUTER_API_KEY, NEXT_PUBLIC_SITE_URL</kbd>
+<kbd>Environment Variables Needed: OPENROUTER_API_KEY, NEXT_PUBLIC_SITE_URL</kbd>
 
-<img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/1f95191f-4118-4a71-9d5a-842154711408" />
-
-<img width="400" height="400" alt="image" src="https://github.com/user-attachments/assets/eed43d7b-1406-45f2-a5e9-3fab43dd76f2" />
-<img width="400" height="400" alt="image" src="https://github.com/user-attachments/assets/f99bead4-f62a-4b5b-bdb0-c196d15beaee" />
+<img width="900" alt="App Interface" src="https://github.com/muaazx/AI-Assistant-Chat-Bot-/blob/main/App%20Interface%20Image.PNG" />
 
 </div>
 
-## Why Lightweight?
+---
 
-Unlike heavyweight RAG solutions that require:
+## Features
 
-- Vector databases (Pinecone, Weaviate, Chroma)
-- Embedding models and preprocessing
-- Complex chunking strategies
-- Database hosting and maintenance
-
-Knowledge-Assistant takes a simpler approach:
-
-- **Just files** - Drop `.md` or `.txt` files in a folder
-- **No preprocessing** - Files are read at request time
-- **No database** - Context goes directly to the LLM
-- **Free models** - Uses OpenRouter's free tier (Llama, Mimo, DeepSeek)
-
-Perfect for: documentation sites, GitHub repos, personal knowledge bases, and projects where simplicity beats complexity.
-
-### Key Features
-
-- **Multiple Free Models** - Choose from Llama 3.3, Mimo, DeepSeek R1, Devstral, GLM
-- **Temperature Control** - Adjust creativity (0 = precise, 2 = creative)
-- **Custom System Prompts** - Add your own AI personality and instructions
-- **Streaming Responses** - Real-time token-by-token output
-- **Markdown Rendering** - Full markdown with syntax highlighting
-- **Mermaid Diagrams** - Live diagram rendering in chat
-- **Code Blocks** - Syntax-highlighted with copy functionality
-- **Persistent Sessions** - Conversations stored in localStorage
-- **Export Chat** - Download conversations as markdown
+* Multiple Free AI Models (Llama, DeepSeek, Mimo, GLM, Devstral)
+* Real-Time Streaming Responses
+* Clean and Responsive Chat Interface
+* Markdown Rendering with Syntax Highlighting
+* Mermaid Diagram Support
+* Code Block Copy Functionality
+* Persistent Chat Sessions
+* Export Chat as Markdown
+* Custom System Prompts
+* Temperature Control for AI Creativity
 
 ---
 
-Knowledge AI loads markdown files from a `content/` directory and uses them as context for AI responses. This approach provides accurate, domain-specific answers without the complexity of vector databases or embeddings.
+## Why This Project?
 
-```mermaid
-flowchart LR
-    subgraph Client
-        A[Chat Interface]
-    end
+This project is designed as a simple AI chatbot that allows users to interact with powerful AI models without complex setup.
 
-    subgraph Server
-        B[Next.js API]
-        C[Knowledge Loader]
-        D[OpenRouter API]
-    end
+Unlike advanced AI systems that require:
 
-    subgraph Knowledge
-        E[content/*.md]
-    end
+* Vector Databases
+* Embedding Models
+* RAG Pipelines
+* Complex Backend Infrastructure
 
-    A -->|User Message| B
-    B --> C
-    C -->|Read Files| E
-    C -->|Context + Message| D
-    D -->|Streaming Response| B
-    B -->|SSE Stream| A
-```
+This chatbot keeps things simple:
+
+* Direct AI Conversations
+* Fast Response Streaming
+* Multiple Free Models via OpenRouter
+* Lightweight and Easy to Deploy
+* Clean User Experience
+
+Perfect for:
+
+* Personal AI Assistants
+* Learning Projects
+* Productivity Tools
+* Customer Support Bots
+* Business Chat Systems
+
+---
 
 ## Quick Start
 
 ### Prerequisites
 
-- Node.js 18+
-- OpenRouter API key ([get one free](https://openrouter.ai))
+* Node.js 18+
+* OpenRouter API Key
 
-### Installation
+Get your free API key from OpenRouter.
+
+---
+
+## Installation
 
 ```bash
-cd knowledge-assistance
+git clone your-repository-link
+cd AI-Assistant-Chat-Bot
 npm install
 cp .env.example .env.local
 ```
 
-Edit `.env.local` with your API key:
+---
+
+## Setup Environment Variables
+
+Edit `.env.local`
 
 ```env
 OPENROUTER_API_KEY=your_api_key_here
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
-### Running
+---
+
+## Run the Project
 
 ```bash
-npm run dev       # Development
-npm run build     # Production build
-npm start         # Start production server
+npm run dev
 ```
 
-Access the application at `http://localhost:3000`
+For production:
 
-## Architecture
-
-```mermaid
-graph TB
-    subgraph Frontend
-        UI[React Chat UI]
-        MD[Markdown Renderer]
-        MM[Mermaid Component]
-        CB[Code Block Component]
-    end
-
-    subgraph API_Layer[API Layer]
-        STREAM[Stream Endpoint]
-        CHAT[Chat Endpoint]
-    end
-
-    subgraph Knowledge_System[Knowledge System]
-        LOADER[File Loader]
-        CONTENT[Content Files]
-    end
-
-    subgraph External
-        OR[OpenRouter API]
-    end
-
-    UI --> STREAM
-    STREAM --> LOADER
-    LOADER --> CONTENT
-    STREAM --> OR
-    OR --> UI
-    UI --> MD
-    MD --> MM
-    MD --> CB
+```bash
+npm run build
+npm start
 ```
 
-## Knowledge System
+Open in browser:
 
-Add knowledge by placing markdown files in the `content/` directory:
-
-```
-content/
-  knowledge.md           # General domain knowledge
-  n8n-workflow-guide.md  # n8n workflow JSON reference
-  n8n-ai-nodes.md        # AI/LangChain node examples
-  n8n-patterns.md        # Common workflow patterns
-  mermaid-syntax.md      # Mermaid diagram reference
+```bash
+http://localhost:3000
 ```
 
-The AI reads all `.md` and `.txt` files at request time and uses them as context for responses.
-
-### Knowledge File Structure
-
-Each knowledge file should be focused on a specific topic:
-
-```markdown
-# Topic Title
-
-Brief overview of the topic.
-
-## Section 1
-
-Detailed information with examples.
-
-## Section 2
-
-Code examples in fenced blocks.
-```
+---
 
 ## Project Structure
 
+```bash
+AI-Assistant-Chat-Bot/
+│
+├── app/
+│   ├── api/
+│   │   ├── chat/
+│   │   └── stream/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── globals.css
+│
+├── components/
+│   ├── chat.tsx
+│   ├── mermaid.tsx
+│   └── ui/
+│
+├── lib/
+│   └── utils.ts
+│
+└── README.md
 ```
-knowledge-assistance/
-  app/
-    api/
-      chat/
-        route.ts          # Non-streaming endpoint
-        stream/
-          route.ts        # Streaming endpoint
-    layout.tsx
-    page.tsx
-    globals.css
-  components/
-    chat.tsx              # Main chat interface
-    mermaid.tsx           # Mermaid and code block rendering
-    ui/                   # Shadcn UI components
-  content/                # Knowledge files
-  lib/
-    utils.ts
-```
+
+---
 
 ## API Endpoints
 
-### POST /api/chat/stream
+### POST `/api/chat/stream`
 
-Streaming chat endpoint using Server-Sent Events.
+Streaming AI response endpoint for real-time conversations.
 
-**Request:**
+### POST `/api/chat`
 
-```json
-{
-  "message": "User message",
-  "messages": [
-    { "role": "user", "content": "Previous message" },
-    { "role": "assistant", "content": "Previous response" }
-  ]
-}
-```
+Non-streaming AI response endpoint.
 
-**Response:** SSE stream with chunked content
+---
 
-### POST /api/chat
+## Tech Stack
 
-Non-streaming chat endpoint.
+* Next.js
+* React
+* TypeScript
+* OpenRouter API
+* Tailwind CSS
+* Shadcn UI
+* Mermaid.js
 
-**Request:** Same as streaming endpoint
+---
 
-**Response:**
+## Author
 
-```json
-{
-  "response": "Complete AI response"
-}
-```
+Developed by Muaaz Ahmed
 
-## Configuration
-
-### Model Selection
-
-The default model can be changed in `app/api/chat/stream/route.ts`:
-
-```typescript
-model: "xiaomi/mimo-v2-flash:free", // or any OpenRouter model
-```
-
-### Token Limits
-
-Adjust response length:
-
-```typescript
-max_tokens: 4096,
-```
-
-## Data Flow
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant Chat UI
-    participant API Route
-    participant Knowledge Loader
-    participant OpenRouter
-
-    User->>Chat UI: Send message
-    Chat UI->>API Route: POST /api/chat/stream
-    API Route->>Knowledge Loader: getKnowledge()
-    Knowledge Loader->>Knowledge Loader: Read content/*.md
-    Knowledge Loader-->>API Route: Knowledge context
-    API Route->>OpenRouter: Stream request
-    loop Streaming
-        OpenRouter-->>API Route: Token chunk
-        API Route-->>Chat UI: SSE event
-        Chat UI-->>User: Render token
-    end
-```
-=======
-# AI-Assistant-Chat-Bot-
->>>>>>> 28e5f99d15ab27cd4cb3bc27b319a190e3d7cbfd
+Passionate about AI, Web Development, and Building Smart Solutions.
